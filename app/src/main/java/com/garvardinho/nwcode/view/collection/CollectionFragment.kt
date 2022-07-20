@@ -46,6 +46,11 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setContentVisible(false)
+    }
+
     override fun setCollectionCategory() {
         presenter.loadUrls(category)
     }
@@ -53,6 +58,7 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
     override fun showPhotos() {
         binding.collectionView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.collectionView.adapter = collectionAdapter
+        setContentVisible(true)
     }
 
     override fun showError(message: String) {
@@ -63,6 +69,18 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
             .setPositiveButton("Got it!") { dialog, _ ->
                 dialog.cancel()
             }.show()
+    }
+
+    override fun setContentVisible(visibility: Boolean) {
+        binding.apply {
+            if (visibility) {
+                loadingIndicator.visibility = View.INVISIBLE
+                collectionView.visibility = View.VISIBLE
+            } else {
+                loadingIndicator.visibility = View.VISIBLE
+                collectionView.visibility = View.INVISIBLE
+            }
+        }
     }
 
     companion object {

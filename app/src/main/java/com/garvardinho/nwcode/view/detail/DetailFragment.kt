@@ -42,12 +42,30 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setContentVisible(false)
+    }
+
     override fun showPhoto(picasso: RequestCreator) {
         picasso
             .placeholder(AppCompatResources.getDrawable(
                 requireContext(),
                 R.drawable.ic_photo_film)!!)
             .into(binding.detailImage)
+        setContentVisible(true)
+    }
+
+    override fun setContentVisible(visibility: Boolean) {
+        binding.apply {
+            if (visibility) {
+                loadingIndicator.visibility = View.INVISIBLE
+                detailImage.visibility = View.VISIBLE
+            } else {
+                loadingIndicator.visibility = View.VISIBLE
+                detailImage.visibility = View.INVISIBLE
+            }
+        }
     }
 
     override fun setPhotoUrl() {

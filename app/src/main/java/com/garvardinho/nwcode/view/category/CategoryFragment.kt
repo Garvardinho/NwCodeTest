@@ -40,16 +40,16 @@ class CategoryFragment : MvpAppCompatFragment(), CategoryView {
         setContentVisible(false)
     }
 
-    private fun setContentVisible(visibility: Boolean) {
+    override fun setContentVisible(visibility: Boolean) {
         binding.apply {
             if (visibility) {
-                loadingIndicator.visibility = View.GONE
+                loadingIndicator.visibility = View.INVISIBLE
                 categoriesView.visibility = View.VISIBLE
                 categories.visibility = View.VISIBLE
             } else {
                 loadingIndicator.visibility = View.VISIBLE
-                categoriesView.visibility = View.GONE
-                categories.visibility = View.GONE
+                categoriesView.visibility = View.INVISIBLE
+                categories.visibility = View.INVISIBLE
             }
         }
     }
