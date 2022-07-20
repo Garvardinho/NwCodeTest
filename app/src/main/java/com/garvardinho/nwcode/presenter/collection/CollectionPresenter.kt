@@ -27,7 +27,7 @@ class CollectionPresenter : MvpPresenter<CollectionView>() {
     val imageViewPresenter = CollectionImageViewPresenter(this)
 
     fun loadUrls(category: CollectionDTO) {
-        networkStatus.isOnlineSingle()
+        networkStatus.isOnline()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
             { isOnline ->

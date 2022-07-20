@@ -32,7 +32,7 @@ class CategoryPresenter : MvpPresenter<CategoryView>() {
     }
 
     private fun loadCategories() {
-        networkStatus.isOnlineSingle()
+        networkStatus.isOnline()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
             { isOnline ->

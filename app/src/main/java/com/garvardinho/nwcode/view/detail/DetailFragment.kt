@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import com.garvardinho.nwcode.App
 import com.garvardinho.nwcode.R
 import com.garvardinho.nwcode.databinding.FragmentDetailBinding
 import com.garvardinho.nwcode.model.retrofit.PhotoDTO
@@ -19,7 +20,11 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
     private val bigPhoto get() = _photo!!
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-    private val presenter by moxyPresenter { DetailPresenter() }
+    private val presenter by moxyPresenter {
+        DetailPresenter().apply {
+            App.instance.appComponent.inject(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
