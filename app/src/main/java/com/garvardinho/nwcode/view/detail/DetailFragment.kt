@@ -1,11 +1,13 @@
 package com.garvardinho.nwcode.view.detail
 
 import android.app.AlertDialog
+import android.app.WallpaperManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
 import com.garvardinho.nwcode.App
 import com.garvardinho.nwcode.R
 import com.garvardinho.nwcode.databinding.FragmentDetailBinding
@@ -39,7 +41,21 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        binding.setAsWallpaperButton.setOnClickListener {
+            WallpaperManager.getInstance(requireContext()).setBitmap(binding.detailImage.drawable.toBitmap())
+            setDoneMessage()
+        }
         return binding.root
+    }
+
+    private fun setDoneMessage() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Wallpaper")
+            .setMessage("Done!")
+            .setCancelable(true)
+            .setPositiveButton("Got it!") { dialog, _ ->
+                dialog.cancel()
+            }.show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
