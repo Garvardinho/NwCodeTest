@@ -1,5 +1,6 @@
 package com.garvardinho.nwcode.view.category
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class CategoryFragment : MvpAppCompatFragment(), CategoryView {
             App.instance.appComponent.inject(this)
         }
     }
+
     private val categoryAdapter by lazy {
         CategoryAdapter(presenter.textViewPresenter).apply {
             App.instance.appComponent.inject(this)
@@ -55,5 +57,15 @@ class CategoryFragment : MvpAppCompatFragment(), CategoryView {
     override fun showCategories() {
         binding.categoriesView.adapter = categoryAdapter
         setContentVisible(true)
+    }
+
+    override fun showError(message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(message)
+            .setCancelable(true)
+            .setPositiveButton("Got it!") { dialog, _ ->
+                dialog.cancel()
+            }.show()
     }
 }

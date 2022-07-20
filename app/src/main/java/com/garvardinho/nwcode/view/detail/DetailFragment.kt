@@ -1,5 +1,6 @@
 package com.garvardinho.nwcode.view.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +8,15 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import com.garvardinho.nwcode.R
 import com.garvardinho.nwcode.databinding.FragmentDetailBinding
+import com.garvardinho.nwcode.model.retrofit.PhotoDTO
 import com.garvardinho.nwcode.presenter.detail.DetailPresenter
 import com.squareup.picasso.RequestCreator
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class DetailFragment : MvpAppCompatFragment(), DetailView {
-    private var _photoUrl: String? = null
-    private val bigPhotoUrl get() = _photoUrl!!
+    private var _photo: PhotoDTO? = null
+    private val bigPhoto get() = _photo!!
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val presenter by moxyPresenter { DetailPresenter() }
@@ -22,7 +24,7 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            _photoUrl = it.getString(DETAIL)
+            _photo = it.getParcelable(DETAIL)
             setPhotoUrl()
         }
     }
@@ -44,16 +46,26 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
     }
 
     override fun setPhotoUrl() {
-        presenter.loadBigPhoto(bigPhotoUrl)
+        presenter.loadBigPhoto(bigPhoto)
+    }
+
+    override fun showError(message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(message)
+            .setCancelable(true)
+            .setPositiveButton("Got it!") { dialog, _ ->
+                dialog.cancel()
+            }.show()
     }
 
     companion object {
         private const val DETAIL = "detail"
 
-        fun newInstance(photoUrl: String) =
+        fun newInstance(photo: PhotoDTO) =
             DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(DETAIL, photoUrl)
+                    putParcelable(DETAIL, photo)
                 }
             }
     }

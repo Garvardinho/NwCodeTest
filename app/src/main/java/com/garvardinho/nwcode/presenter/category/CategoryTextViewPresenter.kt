@@ -1,14 +1,15 @@
 package com.garvardinho.nwcode.presenter.category
 
+import com.garvardinho.nwcode.model.retrofit.CollectionDTO
 import com.garvardinho.nwcode.presenter.RecyclerViewPresenter
 import com.garvardinho.nwcode.view.category.CategoryTextItemView
 
 class CategoryTextViewPresenter(private val presenter: CategoryPresenter) : RecyclerViewPresenter<CategoryTextItemView> {
 
-    private val categories = mutableListOf<String>()
+    private val categories = mutableListOf<CollectionDTO>()
 
     override fun bindView(view: CategoryTextItemView) {
-        view.setText(categories[view.pos])
+        view.setText(categories[view.pos].title.orEmpty())
     }
 
     override fun getCount(): Int = categories.size
@@ -17,7 +18,7 @@ class CategoryTextViewPresenter(private val presenter: CategoryPresenter) : Recy
         presenter.onCategoryClick(categories[pos])
     }
 
-    fun addCategories(categories: List<String>) {
+    fun addCategories(categories: List<CollectionDTO>) {
         this.categories.addAll(categories)
     }
 }

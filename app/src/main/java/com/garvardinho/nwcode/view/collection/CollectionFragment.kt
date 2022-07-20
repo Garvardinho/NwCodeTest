@@ -1,5 +1,6 @@
 package com.garvardinho.nwcode.view.collection
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.garvardinho.nwcode.App
 import com.garvardinho.nwcode.databinding.FragmentCollectionBinding
+import com.garvardinho.nwcode.model.retrofit.CollectionDTO
 import com.garvardinho.nwcode.presenter.collection.CollectionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class CollectionFragment : MvpAppCompatFragment(), CollectionView {
 
-    private var _category: String? = null
+    private var _category: CollectionDTO? = null
     private val category get() = _category!!
     private var _binding: FragmentCollectionBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +33,7 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            _category = it.getString(CATEGORY)
+            _category = it.getParcelable(CATEGORY)
             setCollectionCategory()
         }
     }
@@ -53,13 +55,23 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
         binding.collectionView.adapter = collectionAdapter
     }
 
+    override fun showError(message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(message)
+            .setCancelable(true)
+            .setPositiveButton("Got it!") { dialog, _ ->
+                dialog.cancel()
+            }.show()
+    }
+
     companion object {
         private const val CATEGORY = "category"
 
-        fun newInstance(category: String) =
+        fun newInstance(category: CollectionDTO) =
             CollectionFragment().apply {
                 arguments = Bundle().apply {
-                    putString(CATEGORY, category)
+                    putParcelable(CATEGORY, category)
                 }
             }
     }
