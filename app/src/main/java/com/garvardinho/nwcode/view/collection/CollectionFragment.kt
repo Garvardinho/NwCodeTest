@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.garvardinho.nwcode.App
 import com.garvardinho.nwcode.databinding.FragmentCollectionBinding
 import com.garvardinho.nwcode.model.retrofit.CollectionDTO
@@ -51,7 +51,7 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
     }
 
     override fun showPhotos() {
-        binding.collectionView.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.collectionView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.collectionView.adapter = collectionAdapter
     }
 

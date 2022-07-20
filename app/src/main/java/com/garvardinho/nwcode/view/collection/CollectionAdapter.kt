@@ -6,6 +6,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.garvardinho.nwcode.R
 import com.garvardinho.nwcode.databinding.CollectionImageViewBinding
+import com.garvardinho.nwcode.model.retrofit.PhotoDTO
 import com.garvardinho.nwcode.presenter.RecyclerViewPresenter
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
@@ -39,14 +40,16 @@ class CollectionAdapter @Inject constructor(
 
         override var pos: Int = -1
 
-        override fun setImageFromUrl(url: String) {
+        override fun setImage(image: PhotoDTO) {
             Picasso
                 .get()
-                .load(url)
+                .load(image.urls?.small)
                 .placeholder(AppCompatResources.getDrawable(
                     imageView.root.context,
                     R.drawable.ic_photo_film)!!)
                 .into(imageView.root)
+
+            imageView.root.aspectRatio = image.height?.toDouble()!! / image.width?.toDouble()!!
         }
     }
 

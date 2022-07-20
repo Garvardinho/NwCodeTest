@@ -16,6 +16,6 @@ interface UnsplashAPI {
     fun loadCollection(
         @Url url: String,
         @Query("client_id") key: String,
-        @Query("page") page: Int = 1,
+        @Query("per_page") per_page: Int = 30,
     ) : Single<List<PhotoDTO>>
 }

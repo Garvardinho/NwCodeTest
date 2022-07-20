@@ -6,11 +6,13 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class PhotoDTO(
     var id: String? = null,
+    var width: Int? = null,
+    var height: Int? = null,
     var urls: PhotoUrls? = null
 ) : Parcelable {
     @Parcelize
     data class PhotoUrls(
-        var full: String? = null,
+        var regular: String? = null,
         var small: String? = null
     ) : Parcelable
 }

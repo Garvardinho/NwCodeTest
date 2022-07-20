@@ -8,6 +8,6 @@ import moxy.MvpPresenter
 class DetailPresenter : MvpPresenter<DetailView>() {
 
     fun loadBigPhoto(photo: PhotoDTO) {
-        viewState.showPhoto(Picasso.get().load(photo.urls?.full))
+        viewState.showPhoto(Picasso.get().load(photo.urls?.regular))
     }
 }

@@ -10,7 +10,7 @@ class CollectionImageViewPresenter(private val presenter: CollectionPresenter)
     private val photos = mutableListOf<PhotoDTO>()
 
     override fun bindView(view: CollectionImageView) {
-        view.setImageFromUrl(photos[view.pos].urls?.small.orEmpty())
+        view.setImage(photos[view.pos])
     }
 
     override fun getCount(): Int = photos.size
