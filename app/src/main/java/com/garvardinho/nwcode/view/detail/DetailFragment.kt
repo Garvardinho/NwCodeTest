@@ -13,6 +13,8 @@ import com.garvardinho.nwcode.R
 import com.garvardinho.nwcode.databinding.FragmentDetailBinding
 import com.garvardinho.nwcode.model.retrofit.PhotoDTO
 import com.garvardinho.nwcode.presenter.detail.DetailPresenter
+import com.garvardinho.nwcode.utils.FragmentInitializer
+import com.garvardinho.nwcode.utils.KEY_PARAM
 import com.squareup.picasso.RequestCreator
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -31,7 +33,7 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            _photo = it.getParcelable(DETAIL)
+            _photo = it.getParcelable(KEY_PARAM)
             setPhotoUrl()
         }
     }
@@ -98,14 +100,5 @@ class DetailFragment : MvpAppCompatFragment(), DetailView {
             }.show()
     }
 
-    companion object {
-        private const val DETAIL = "detail"
-
-        fun newInstance(photo: PhotoDTO) =
-            DetailFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(DETAIL, photo)
-                }
-            }
-    }
+    companion object : FragmentInitializer<PhotoDTO>
 }

@@ -10,6 +10,8 @@ import com.garvardinho.nwcode.App
 import com.garvardinho.nwcode.databinding.FragmentCollectionBinding
 import com.garvardinho.nwcode.model.retrofit.CollectionDTO
 import com.garvardinho.nwcode.presenter.collection.CollectionPresenter
+import com.garvardinho.nwcode.utils.FragmentInitializer
+import com.garvardinho.nwcode.utils.KEY_PARAM
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -33,7 +35,7 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            _category = it.getParcelable(CATEGORY)
+            _category = it.getParcelable(KEY_PARAM)
             setCollectionCategory()
         }
     }
@@ -83,14 +85,5 @@ class CollectionFragment : MvpAppCompatFragment(), CollectionView {
         }
     }
 
-    companion object {
-        private const val CATEGORY = "category"
-
-        fun newInstance(category: CollectionDTO) =
-            CollectionFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(CATEGORY, category)
-                }
-            }
-    }
+    companion object : FragmentInitializer<CollectionDTO>
 }
